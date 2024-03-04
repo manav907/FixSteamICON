@@ -13,23 +13,9 @@ icon_locations = "\\steam\\games\\"
 
 
 # Sample text data
-def main():
-    
-    #os.startfile(steam_maindir+libraryfoldersLocation)
-    with open(steam_maindir+libraryfoldersLocation, "r") as libfolderdata:
-        file_contents = libfolderdata.read()
-    data = vdf_to_json(file_contents)
-    print(data)
-    #doRealWork()
+def main():    
+    doRealWork()
 
-def vdf_to_json(vdf_string):
-    # Parse VDF string
-    vdf_data = vdf.loads(vdf_string)
-
-    # Convert to JSON
-    json_data = json.dumps(vdf_data, indent=4)
-
-    return json_data
 def doRealWork():
     global steam_maindir
     root = tk.Tk()
@@ -94,13 +80,10 @@ def saveicon(app_id,client_icon_string):
   
 
 def getjsondata():
-    script_directory = os.path.dirname(os.path.realpath(__file__))
-    file_path = os.path.join(script_directory, "libraryfolders.json")
-
-    with open(file_path, "r") as libfolderdata:
+    with open(steam_maindir+libraryfoldersLocation, "r") as libfolderdata:
         file_contents = libfolderdata.read()
-    data = json.loads(file_contents)
-    return data
+    data_dict = vdf.loads(file_contents)
+    return data_dict
 
 def get_app_ids(data):
     """Extract and return a list of app IDs."""
@@ -113,10 +96,12 @@ def get_app_ids(data):
         app_ids.update(apps.keys())
     return sorted(app_ids, key=int)
 
+#for debugging purpose
 def printappidlist():
     applist = get_app_ids(getjsondata())
     for gameID in applist:
         print (gameID)
+
 if __name__ == "__main__":
     main()
 else:
