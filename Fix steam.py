@@ -4,28 +4,29 @@ import os
 import requests
  # Get the directory of the current script
 script_directory = os.path.dirname(os.path.abspath(__file__))
-steam_maindir = "C:\Program Files (x86)\Steam"
+steam_maindir = "C:\\Program Files (x86)\\Steam"
+
 
 # Sample text data
 output_data = "fakfae."
-def main():
-    # Replace 'YOUR_STEAM_API_KEY' with your actual Steam API key
-    steam_api_key = 'YOUR_STEAM_API_KEY'
-    base_url = 'http://store.steampowered.com/api/appdetails/'
-    app_id = 570
-    # Make a request to the GetAppDetails endpoint
-    response = requests.get(f'{base_url}?appids={app_id}&key={steam_api_key}')
+def get_html_content(url):
+    try:
+        response = requests.get(url)
+        response.raise_for_status()  # Raise an HTTPError for bad responses (4xx and 5xx status codes)
+        return response.text
+    except requests.exceptions.RequestException as e:
+        print(f"Error: {e}")
+        return None
 
-    if response.status_code == 200:
-        data = response.json()
-        if str(app_id) in data and data[str(app_id)]['success']:
-            game_info = data[str(app_id)]['data']
-            print(game_info)
-            return game_info
-        else:
-            print(f"Error: Unable to get information for app ID {app_id}")
+def main():
+    steamdb_url = "https://steamdb.info/app/570/"
+    html_content = get_html_content(steamdb_url)
+
+    if html_content:
+        # Print the first 500 characters of the HTML content
+        print(html_content[:500])
     else:
-        print(f"Error: Unable to connect to the Steam API. Status code: {response.status_code}")
+        print("Failed to retrieve HTML content.")
 
 
 def saveicon():

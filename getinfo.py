@@ -1,40 +1,39 @@
 import requests
+from bs4 import BeautifulSoup
 
-def get_asset_prices(app_id):
-    # Replace 'YOUR_STEAM_API_KEY' with your actual Steam API key
-    steam_api_key = '0454723C449D7D70C35DAE286C05448F'
-    base_url = 'https://api.steampowered.com/ISteamEconomy/GetAssetPrices/v1/'
-
-    # Make a request to the GetAssetPrices endpoint for the specified app ID
-    response = requests.get(f'{base_url}?appid={app_id}&key={steam_api_key}')
-
-    if response.status_code == 200:
-        data = response.json()
-        print(data)
-        return data.get('prices', [])
-    else:
-        print(f"Error: Unable to connect to the Steam API. Status code: {response.status_code}")
+def get_html_content(url):
+    headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+}
+    try:
+        response = requests.get(url, headers=headers)
+        response.raise_for_status()
+        return response.text
+    except requests.exceptions.RequestException as e:
+        print(f"Error: {e}")
         return None
 
-def get_client_icon_url(app_id):
-    asset_prices = get_asset_prices(app_id)
+def parse_steamdb_content(html_content):
+    soup = BeautifulSoup(html_content, 'html.parser')
 
-    if asset_prices:
-        for asset in asset_prices:
-            if 'clienticon' in asset:
-                return asset['clienticon']
-        
-    return None
+    # Example: Extracting the title of the SteamDB page
+    title = soup.title.text
+    print(f"Title: {title}")
+
+    # Example: Extracting the description of the app
+    description = soup.find('meta', {'name': 'description'}).get('content', '')
+    print(f"Description: {description}")
+
+    # Add more parsing logic based on the structure of the HTML
 
 def main():
-    # Example: Get client icon URL for the game with app ID 570 (Dota 2)
-    app_id = 570
-    client_icon_url = get_client_icon_url(app_id)
+    steamdb_url = "https://steamdb.info/app/570/"
+    html_content = get_html_content(steamdb_url)
 
-    if client_icon_url:
-        print(f"Client Icon URL: {client_icon_url}")
+    if html_content:
+        parse_steamdb_content(html_content)
     else:
-        print(f"Client icon not found for app ID {app_id}")
+        print("Failed to retrieve HTML content.")
 
 if __name__ == "__main__":
     main()
