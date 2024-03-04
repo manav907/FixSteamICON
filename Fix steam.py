@@ -15,25 +15,31 @@ def main():
 
 def fixIcon(app_id):
     jsondata=get_app_info_as_json(app_id)
-    print(getClientIconKey(jsondata))
+    print("Got json")
+    clientIconString = get_client_icon(jsondata,app_id)
+    if(clientIconString):
+        print("got")
+        saveicon(app_id,clientIconString)
 
 
-def getClientIconKey(data):
+def get_client_icon(data, app_id):
     # Check if the app_id is present in the data
-    if "apps" in data and str(570) in data["apps"]:
-        app_info = data["apps"][str(570)]
+    if "apps" in data and str(app_id) in data["apps"]:
+        app_info = data["apps"][str(app_id)]
         if "common" in app_info:
             common_info = app_info["common"]
             if "clienticon" in common_info:
                 return common_info["clienticon"]
+            else:
+                print("Critial Error"+ app_id + common_info["name"]+" does not have a client icon")
 
     # If the app_id is not found or doesn't have the required information
     return None
 
 
 def get_app_info_as_json(app_id):
-    info_url = "http://localhost:8080/info?apps=570"
-    print(info_url)
+    info_url = "http://localhost:8080/info?apps="+str(app_id)
+    #print(info_url)
     # Make a request to the API endpoint
     response = requests.get(info_url)
 
@@ -45,14 +51,14 @@ def get_app_info_as_json(app_id):
         return None
 
 
-def saveicon():
+def saveicon(app_id,clientIconString):
     iconlocations = "\\steam\\games\\"
-    outputfalie = steam_maindir+iconlocations+"output.txt"
-    iconurl = "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/570/c0d15684e6c186289b50dfe083f5c562c57e8fb6.ico"
+    outputfalie = steam_maindir+iconlocations+clientIconString+".ico"
+    iconurl = f"https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/"+str(app_id)+"/"+clientIconString+".ico"
     print(outputfalie)
-    with open(outputfalie, "w") as file:
-            file.write(output_data)
-    subprocess.run(["explorer", outputfalie], shell=True)        
+    with open(outputfalie, "wb") as file:
+            file.write(iconurl)
+    #subprocess.run(["explorer", steam_maindir+iconlocations], shell=False)    
 
 def getjsondata():
     with open("libraryfolders.json","r") as libfolderdata:
