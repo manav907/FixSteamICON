@@ -11,7 +11,8 @@ steam_maindir = "C:\\Program Files (x86)\\Steam"
 output_data = "fakfae."
 def main():
     print("interpreter workiks")
-    fixIcon(570)
+    for app_id in get_app_ids():
+        fixIcon(app_id)
 
 def fixIcon(app_id):
     jsondata=get_app_info_as_json(app_id)
@@ -31,8 +32,7 @@ def get_client_icon(data, app_id):
             if "clienticon" in common_info:
                 return common_info["clienticon"]
             else:
-                print("Critial Error"+ app_id + common_info["name"]+" does not have a client icon")
-
+                print("Critical Error " + str(app_id) + " " + common_info["name"] + " does not have a client icon")
     # If the app_id is not found or doesn't have the required information
     return None
 
@@ -51,25 +51,23 @@ def get_app_info_as_json(app_id):
         return None
 
 
-def saveicon(app_id,clientIconString):
-    iconlocations = "\\steam\\games\\"
-    outputfalie = steam_maindir+iconlocations+clientIconString+".ico"
-    iconurl = f"https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/"+str(app_id)+"/"+clientIconString+".ico"
-    print(outputfalie)
-    with open(outputfalie, "wb") as file:
-            file.write(iconurl)
-    #subprocess.run(["explorer", steam_maindir+iconlocations], shell=False)    
+def saveicon(app_id,client_icon_string):
+    icon_locations = "\\steam\\games\\"
+    output_file = steam_maindir + icon_locations + client_icon_string + ".ico"
+    icon_url = f"https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/{app_id}/{client_icon_string}.ico"
+    response = requests.get(icon_url)
+    if response.status_code == 200:
+        with open(output_file, "wb") as file:
+            file.write(response.content)
+        print("Icon saved successfully.")
+    else:
+        print(f"Failed to download icon. Status code: {response.status_code}")
+  
 
-def getjsondata():
+def get_app_ids():
     with open("libraryfolders.json","r") as libfolderdata:
         file_contents = libfolderdata.read()
-    #print(file_contents)
-    # Parse the JSON-like content
     data = json.loads(file_contents)
-    return data
-
-def get_app_ids(data):
-    """Extract and return a list of app IDs."""
     app_ids = set()
 
     for folder_key in data.get("libraryfolders", {}):
@@ -80,34 +78,9 @@ def get_app_ids(data):
     return sorted(app_ids, key=int)
 
 def printappidlist():
-    applist = get_app_ids(getjsondata())
+    applist = get_app_ids()
     for gameID in applist:
         print (gameID)
-
-
-def save():
-
-       
-
-    # Specify the file name and path
-    file_name = "output.txt"
-    file_path = os.path.join(script_directory, file_name)
-
-    # Print the text data
-    print("########")
-    print("########")
-    print(output_data)
-    print("########")
-    print("########")
-    # Save the text to a file
-    with open(file_path, "w") as file:
-        file.write(output_data)
-
-    print(f"\nText saved to {file_name} in {file_path}.")
-
-    # Open the file in the default file explorer
-    subprocess.run(["explorer", file_path], shell=True)
-
 if __name__ == "__main__":
     main()
 else:
