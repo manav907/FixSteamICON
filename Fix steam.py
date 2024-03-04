@@ -20,7 +20,7 @@ def main():
         data = response.json()
         if str(app_id) in data and data[str(app_id)]['success']:
             game_info = data[str(app_id)]['data']
-            print(f"Icon URL: {game_info['img_icon_url']}")
+            print(game_info)
             return game_info
         else:
             print(f"Error: Unable to get information for app ID {app_id}")
