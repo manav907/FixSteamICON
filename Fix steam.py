@@ -1,18 +1,43 @@
 import json
-import subprocess
 import os
 import requests
+import tkinter as tk
+from tkinter import filedialog
+import vdf
+import json
  # Get the directory of the current script
 script_directory = os.path.dirname(os.path.abspath(__file__))
 steam_maindir = "C:\\Program Files (x86)\\Steam"
+libraryfoldersLocation = "\\steamapps\\libraryfolders.vdf"
+icon_locations = "\\steam\\games\\"
 
 
 # Sample text data
 def main():
-    print("interpreter workiks")
-    getjsondata()
+    
+    #os.startfile(steam_maindir+libraryfoldersLocation)
+    with open(steam_maindir+libraryfoldersLocation, "r") as libfolderdata:
+        file_contents = libfolderdata.read()
+    data = vdf_to_json(file_contents)
+    print(data)
+    #doRealWork()
+
+def vdf_to_json(vdf_string):
+    # Parse VDF string
+    vdf_data = vdf.loads(vdf_string)
+
+    # Convert to JSON
+    json_data = json.dumps(vdf_data, indent=4)
+
+    return json_data
+def doRealWork():
+    global steam_maindir
+    root = tk.Tk()
+    root.withdraw()  # Hide the main window
+    steam_maindir = filedialog.askdirectory(title="Select Folder")
+    os.startfile(steam_maindir+icon_locations)
     for app_id in get_app_ids(getjsondata()):
-        fixIcon(app_id)
+            fixIcon(app_id)
 
 def fixIcon(app_id):
     jsondata=get_app_info_as_json(app_id)
@@ -55,8 +80,7 @@ def get_app_info_as_json(app_id):
 
 
 def saveicon(app_id,client_icon_string):
-    global fixIconStatus
-    icon_locations = "\\steam\\games\\"
+    global fixIconStatus    
     output_file = steam_maindir + icon_locations + client_icon_string + ".ico"
     icon_url = f"https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/{app_id}/{client_icon_string}.ico"
     response = requests.get(icon_url)
