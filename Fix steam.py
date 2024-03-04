@@ -11,35 +11,27 @@ steam_maindir = "C:\\Program Files (x86)\\Steam"
 output_data = "fakfae."
 def main():
     print("interpreter workiks")
-    jsondata=parseInfo(570)
-    getClientIconKey(jsondata)
+    fixIcon(570)
 
-def parseInfo(app_id_to_query):
-    app_info = get_app_info(app_id_to_query)
+def fixIcon(app_id):
+    jsondata=get_app_info_as_json(app_id)
+    print(getClientIconKey(jsondata))
 
-    if app_info:
-        print(f"App Info for App ID {app_id_to_query}:\n{json.dumps(app_info, indent=2)}")
-    
-    with open(app_info,"r") as jsoncontent:
-        file_contents = jsoncontent.read()
-    #print(file_contents)
-    # Parse the JSON-like content
-    data = json.loads(file_contents)
-    return data
 
 def getClientIconKey(data):
-    """Extract and return a list of app IDs."""
-    app_ids = set()
+    # Check if the app_id is present in the data
+    if "apps" in data and str(570) in data["apps"]:
+        app_info = data["apps"][str(570)]
+        if "common" in app_info:
+            common_info = app_info["common"]
+            if "clienticon" in common_info:
+                return common_info["clienticon"]
 
-    for folder_key in data.get("libraryfolders", {}):
-        folder = data["libraryfolders"][folder_key]
-        #print(folder.get("path", {}))
-        apps = folder.get("apps", {})
-        app_ids.update(apps.keys())
-    return sorted(app_ids, key=int)
+    # If the app_id is not found or doesn't have the required information
+    return None
 
 
-def get_app_info(app_id):
+def get_app_info_as_json(app_id):
     info_url = "http://localhost:8080/info?apps=570"
     print(info_url)
     # Make a request to the API endpoint
