@@ -1,0 +1,3 @@
+Unterminated
+{
+	info            "This vdf file is unterminated, so we expect a parse error"

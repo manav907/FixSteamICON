@@ -1,0 +1,4 @@
+* text=auto
+
+*.eol-crlf.* text eol=crlf
+*.eol-lf.* text eol=lf

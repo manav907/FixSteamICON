@@ -1,0 +1,66 @@
+{
+  "name": "@bbob/parser",
+  "version": "2.9.0",
+  "description": "A BBCode to AST Parser part of @bbob",
+  "keywords": [
+    "bbcode",
+    "parser",
+    "ast",
+    "bbcode parser",
+    "bbcodeparser",
+    "bbob",
+    "array",
+    "parse"
+  ],
+  "dependencies": {
+    "@bbob/plugin-helper": "^2.9.0"
+  },
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "jsnext:main": "es/index.js",
+  "browser": "dist/index.js",
+  "browserName": "BbobParser",
+  "homepage": "https://github.com/JiLiZART/bbob",
+  "author": "Nikolay Kostyurin <jilizart@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JiLiZART/bbob/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/JiLiZART/bbob.git"
+  },
+  "scripts": {
+    "build:commonjs": "../../scripts/pkg-task build-commonjs",
+    "build:es": "../../scripts/pkg-task build-es",
+    "build:umd": "../../scripts/pkg-task build-umd",
+    "build": "npm run build:commonjs && npm run build:es && npm run build:umd",
+    "test": "../../scripts/pkg-task test",
+    "cover": "../../scripts/pkg-task cover",
+    "lint": "../../scripts/pkg-task lint",
+    "size": "../../scripts/pkg-task size",
+    "bundlesize": "../../scripts/pkg-task bundlesize",
+    "prepublishOnly": "npm run build"
+  },
+  "size-limit": [
+    {
+      "path": "lib/index.js"
+    }
+  ],
+  "bundlesize": [
+    {
+      "path": "./dist/index.min.js",
+      "maxSize": "3 KB"
+    }
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "files": [
+    "dist",
+    "lib",
+    "src",
+    "es"
+  ],
+  "gitHead": "e5c741cb9a771ae5a7247ab73c2a2f90b8d83b28"
+}

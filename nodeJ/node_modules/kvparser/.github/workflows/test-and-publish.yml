@@ -1,0 +1,28 @@
+name: Test and Publish
+
+on:
+    push:
+        branches:
+            # Only run on branch push, not tag push
+            - '**'
+    pull_request:
+
+jobs:
+    test:
+        # Run for external PRs, but not on our own internal PRs as they'll be run by the push to the branch.
+        if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != 'DoctorMcKay/node-kvparser'
+
+        strategy:
+            matrix:
+                node-version: [ 4.x, 6.x, 8.x, 10.x, 12.x, 14.x, 16.x, 18.x, 20.x ]
+
+        uses: DoctorMcKay/github-workflows/.github/workflows/npm-test.yml@master
+        with:
+            node-version: ${{ matrix.node-version }}
+
+    publish:
+        needs: [ test ]
+        if: success() && github.event.ref == 'refs/heads/master' && contains(github.event.head_commit.message, '#npm-publish')
+        uses: DoctorMcKay/github-workflows/.github/workflows/npm-publish.yml@master
+        secrets:
+            npm-access-token: ${{ secrets.NPM_ACCESS_TOKEN }}

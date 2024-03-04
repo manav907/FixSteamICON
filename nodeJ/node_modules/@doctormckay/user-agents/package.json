@@ -1,0 +1,19 @@
+{
+	"name": "@doctormckay/user-agents",
+	"version": "1.0.0",
+	"description": "Provides default user-agent values for @doctormckay's modules",
+	"homepage": "https://github.com/DoctorMcKay/node-user-agents",
+	"bugs": {
+		"url": "https://github.com/DoctorMcKay/node-user-agents/issues"
+	},
+	"license": "MIT",
+	"author": {
+		"name": "Alex Corn",
+		"email": "mckay@doctormckay.com",
+		"url": "https://www.doctormckay.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/DoctorMcKay/node-user-agents.git"
+	}
+}

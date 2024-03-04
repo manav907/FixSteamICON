@@ -1,0 +1,7 @@
+RootKey
+{
+	info            "This file starts a subkey without a name, which is invalid"
+	{
+		this_is     invalid
+	}
+}

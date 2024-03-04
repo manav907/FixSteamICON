@@ -1,0 +1,26 @@
+UnquotedRoot
+{
+	Unquoted_Key        Unquoted_Value_After_Spaces
+	Unquoted_Key_2		Unquoted_Value_After_Tabs
+	Unquoted_Key_3 Unquoted_Value_After_Single_Space
+	"Quoted Key 1"      "Quoted Value 1"
+	"Quoted key with \"nested\" quotes"     "Quoted value with \"C:\\Some\\Path\\To\\Some\\File.txt\""
+	"QuotedKeyWithoutWhitespace"            "Quoted value that ends with escaped backslash\\"
+
+	"value with newline"        "This value has a new line in it
+this is the next line"
+
+	// this is a comment, which should be ignored
+
+	SubObject // this line ends in a comment
+	{
+		Hello       World
+		"This is"   "A sub-object"
+
+		"Sub Object 3, this one is empty"
+		{
+		}
+	}
+}
+
+Here's some more junk after the end of the file. This should be ignored.

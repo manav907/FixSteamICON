@@ -1,0 +1,4 @@
+RootKey     RootValue
+{
+	info        "This file has a value for the root key, which is invalid"
+}

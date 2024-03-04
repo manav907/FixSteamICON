@@ -1,0 +1,19 @@
+{
+	"name": "steam-pics-api",
+	"version": "1.0.0",
+	"description": "Provides an HTTP API to Steam's product information control system",
+	"main": "app.js",
+	"scripts": {
+		"start": "forever app.js"
+	},
+	"author": "Dr. McKay",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/DoctorMcKay/steam-pics-api.git"
+	},
+	"dependencies": {
+		"express": "^4.17.1",
+		"steam-user": "^4.29.3"
+	}
+}

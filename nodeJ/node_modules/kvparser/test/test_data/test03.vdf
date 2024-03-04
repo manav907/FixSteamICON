@@ -1,0 +1,5 @@
+SyntaxError
+{
+	info        "This file contains a key with no matching value, which should result in a syntax error"
+	unmatchedkey
+}
