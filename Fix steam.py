@@ -11,15 +11,14 @@ steam_maindir = "C:\\Program Files (x86)\\Steam"
 output_data = "fakfae."
 def main():
     print("interpreter workiks")
-    for app_id in get_app_ids():
+    getjsondata()
+    for app_id in get_app_ids(getjsondata()):
         fixIcon(app_id)
 
 def fixIcon(app_id):
     jsondata=get_app_info_as_json(app_id)
-    print("Got json")
     clientIconString = get_client_icon(jsondata,app_id)
     if(clientIconString):
-        print("got")
         saveicon(app_id,clientIconString)
 
 
@@ -64,10 +63,17 @@ def saveicon(app_id,client_icon_string):
         print(f"Failed to download icon. Status code: {response.status_code}")
   
 
-def get_app_ids():
-    with open("libraryfolders.json","r") as libfolderdata:
+def getjsondata():
+    script_directory = os.path.dirname(os.path.realpath(__file__))
+    file_path = os.path.join(script_directory, "libraryfolders.json")
+
+    with open(file_path, "r") as libfolderdata:
         file_contents = libfolderdata.read()
     data = json.loads(file_contents)
+    return data
+
+def get_app_ids(data):
+    """Extract and return a list of app IDs."""
     app_ids = set()
 
     for folder_key in data.get("libraryfolders", {}):
@@ -78,7 +84,7 @@ def get_app_ids():
     return sorted(app_ids, key=int)
 
 def printappidlist():
-    applist = get_app_ids()
+    applist = get_app_ids(getjsondata())
     for gameID in applist:
         print (gameID)
 if __name__ == "__main__":
