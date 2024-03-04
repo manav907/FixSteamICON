@@ -8,7 +8,6 @@ steam_maindir = "C:\\Program Files (x86)\\Steam"
 
 
 # Sample text data
-output_data = "fakfae."
 def main():
     print("interpreter workiks")
     getjsondata()
@@ -21,17 +20,22 @@ def fixIcon(app_id):
     if(clientIconString):
         saveicon(app_id,clientIconString)
 
-
+fixIconStatus=""
 def get_client_icon(data, app_id):
+    global fixIconStatus
     # Check if the app_id is present in the data
     if "apps" in data and str(app_id) in data["apps"]:
         app_info = data["apps"][str(app_id)]
         if "common" in app_info:
             common_info = app_info["common"]
+            fixIconStatus+= str(app_id) + " - " + common_info["name"] + " - "
             if "clienticon" in common_info:
                 return common_info["clienticon"]
             else:
-                print("Critical Error " + str(app_id) + " " + common_info["name"] + " does not have a client icon")
+                print("########")
+                print(str(app_id) + " - " + common_info["name"] + " - Critical Error does not have a client icon")
+                print("########")
+                fixIconStatus=""
     # If the app_id is not found or doesn't have the required information
     return None
 
@@ -51,6 +55,7 @@ def get_app_info_as_json(app_id):
 
 
 def saveicon(app_id,client_icon_string):
+    global fixIconStatus
     icon_locations = "\\steam\\games\\"
     output_file = steam_maindir + icon_locations + client_icon_string + ".ico"
     icon_url = f"https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/{app_id}/{client_icon_string}.ico"
@@ -58,7 +63,8 @@ def saveicon(app_id,client_icon_string):
     if response.status_code == 200:
         with open(output_file, "wb") as file:
             file.write(response.content)
-        print("Icon saved successfully.")
+        print(fixIconStatus +"Icon saved successfully.")
+        fixIconStatus=""
     else:
         print(f"Failed to download icon. Status code: {response.status_code}")
   
