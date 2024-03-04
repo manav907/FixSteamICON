@@ -9,24 +9,48 @@ steam_maindir = "C:\\Program Files (x86)\\Steam"
 
 # Sample text data
 output_data = "fakfae."
-def get_html_content(url):
-    try:
-        response = requests.get(url)
-        response.raise_for_status()  # Raise an HTTPError for bad responses (4xx and 5xx status codes)
-        return response.text
-    except requests.exceptions.RequestException as e:
-        print(f"Error: {e}")
-        return None
-
 def main():
-    steamdb_url = "https://steamdb.info/app/570/"
-    html_content = get_html_content(steamdb_url)
+    print("interpreter workiks")
+    jsondata=parseInfo(570)
+    getClientIconKey(jsondata)
 
-    if html_content:
-        # Print the first 500 characters of the HTML content
-        print(html_content[:500])
+def parseInfo(app_id_to_query):
+    app_info = get_app_info(app_id_to_query)
+
+    if app_info:
+        print(f"App Info for App ID {app_id_to_query}:\n{json.dumps(app_info, indent=2)}")
+    
+    with open(app_info,"r") as jsoncontent:
+        file_contents = jsoncontent.read()
+    #print(file_contents)
+    # Parse the JSON-like content
+    data = json.loads(file_contents)
+    return data
+
+def getClientIconKey(data):
+    """Extract and return a list of app IDs."""
+    app_ids = set()
+
+    for folder_key in data.get("libraryfolders", {}):
+        folder = data["libraryfolders"][folder_key]
+        #print(folder.get("path", {}))
+        apps = folder.get("apps", {})
+        app_ids.update(apps.keys())
+    return sorted(app_ids, key=int)
+
+
+def get_app_info(app_id):
+    info_url = "http://localhost:8080/info?apps=570"
+    print(info_url)
+    # Make a request to the API endpoint
+    response = requests.get(info_url)
+
+    if response.status_code == 200:
+        app_info = response.json()
+        return app_info
     else:
-        print("Failed to retrieve HTML content.")
+        print(f"Error: Unable to retrieve app info. Status code: {response.status_code}")
+        return None
 
 
 def saveicon():
