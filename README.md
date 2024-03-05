@@ -1,6 +1,30 @@
-The repo exists to allow fixing steam (web) shortcuts having blank icons due to a specific issue.
+# Steam Web Shortcuts Icon Fix
 
-this issue cannot be fixed by simply rebuilding icon cache and or selecting "internet browerser" as defult for .url extensions\
-this issue can be reproduced by having an external drive/folder for steam apps and uninstalling and reinstalling steam and reusing already installed contents of said external drive so as to avoid reinstalling steamapps.
+This repository addresses a specific issue related to blank icons in Steam (web) shortcuts. Thes problem cannot be resolved by simply rebuilding the icon cache or setting "internet browser" as the default for .url extensions.
 
-the primary cause for this issue is that when you avoid redownloading steamapps and instead use and external steam liberary folder after reinstalling steam the /steam/games folder inside the primary steam directory does not get repopulated with .ico files of steamapps that you did not redownload
+## Issue Description
+
+The issue occurs when you have an external drive or folder for Steam apps, uninstall Steam, reinstall it, and reuse the previously installed contents from the external drive to avoid redownloading steamapps. In this situation, the "DefaultSteamInstallDIR"/steam/games folder does not get repopulated with .ico files of steamapps that were not redownloaded.
+
+## Reproducing the Issue
+
+1. Have an external drive or folder for Steam apps.
+2. Uninstall Steam.
+3. Reinstall Steam
+4. Go to Steam settings.
+5. Open Storage -> use drop down to add the old steam library location
+6. Close Steam Settings
+7. Go to Library .> Right click on a game from the external steamapps folder -> Manage -> add desktop shorcut
+
+Result: there is an blank desktop web shortcut for the said game
+## Solution
+
+This repository provides a fix for the described issue. By addressing the lack of .ico files in the "DefaultSteamInstallDIR"/steam/games folder after reinstalling Steam, the blank icons for Steam (web) shortcuts can be resolved.
+
+## Contributing
+
+Contributions to enhance or address additional related issues are welcome. Please follow the guidelines outlined in the contributing documentation.
+
+## License
+
+This project is licensed under the [License Name] - see the [LICENSE](LICENSE) file for details.
