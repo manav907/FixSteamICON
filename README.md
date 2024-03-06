@@ -4,7 +4,7 @@ This repository addresses a specific issue related to blank icons in Steam (web)
 
 ## Issue Description
 
-The issue occurs when you have an external drive or folder for Steam apps, uninstall Steam, reinstall it, and reuse the previously installed contents from the external drive to avoid redownloading steamapps. In this situation, the "DefaultSteamInstallDIR"/steam/games folder does not get repopulated with .ico files of steamapps that were not redownloaded.
+The issue occurs when you have an external library folder for Steam, uninstall Steam, reinstall it, and reuse the the external library folder to avoid redownloading steamapps. In this situation, the "DefaultSteamInstallDIR"/steam/games folder does not get repopulated with .ico files of steamapps that were not redownloaded.
 
 ## Reproducing the Issue
 
@@ -19,12 +19,15 @@ The issue occurs when you have an external drive or folder for Steam apps, unins
 Result: there is an blank desktop web shortcut for the said game
 ## Solution
 
-This repository provides a fix for the described issue. By addressing the lack of .ico files in the "DefaultSteamInstallDIR"/steam/games folder after reinstalling Steam, the blank icons for Steam (web) shortcuts can be resolved.
+This repository provides a fix for the described issue. By redownloading .ico files in the "DefaultSteamInstallDIR"/steam/games folder after reinstalling Steam, the blank icons for Steam (web) shortcuts can be resolved.
 
-## Contributing
+to resolve the isue follow these steps
+1.  run the install stipm-pics-api.bat
+2.  run the run-server.bat
+3.  ensure python is installed and run fix steam.py
+4.  run Rebuild_Icon_Cache.bat
 
-Contributions to enhance or address additional related issues are welcome. Please follow the guidelines outlined in the contributing documentation.
+the problem should be resolved now
 
-## License
 
-This project is licensed under the [License Name] - see the [LICENSE](LICENSE) file for details.
+
