@@ -22,10 +22,11 @@ Result: there is an blank desktop web shortcut for the said game
 This repository provides a fix for the described issue. By redownloading .ico files in the "DefaultSteamInstallDIR"/steam/games folder after reinstalling Steam, the blank icons for Steam (web) shortcuts can be resolved.
 
 to resolve the isue follow these steps
-1.  run the install stipm-pics-api.bat
-2.  run the run-server.bat
-3.  ensure python is installed and run fix steam.py
-4.  run Rebuild_Icon_Cache.bat
+1.  ensure python is installed and reboot
+2.  run the install-dependencies.bat
+3.  run the run-server.bat
+4.  run fix steam.py
+5.  run Rebuild_Icon_Cache.bat
 
 the problem should be resolved now
 
