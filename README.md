@@ -1,6 +1,11 @@
 # Steam Web Shortcuts Icon Fix
 
-This repository addresses a specific issue related to blank icons in Steam (web) shortcuts. Thes problem cannot be resolved by simply rebuilding the icon cache or setting "internet browser" as the default for .url extensions.
+This repository addresses a specific issue related to blank icons in Steam (web) shortcuts. This problem cannot be resolved by simply rebuilding the icon cache or setting "internet browser" as the default for .url extensions or verifying game files.
+
+There are easier solutions available, such as:
+
+1.  Manually Changing the Icons: Manually changing the icons is tedious and provides only a temporary fix, as the problem will resurface as soon as a new desktop shortcut is created.
+2.  Reinstalling the Games: Reinstalling 300+ GBs of games isn't a great idea, even if you attempt to use the old game files. Steam will waste a significant amount of time verifying installations and may still download some files that you already had.
 
 ## Issue Description
 
@@ -33,4 +38,7 @@ to resolve the isue follow these steps
 the problem should be resolved now
 
 
+## Credits
 
+special thanks to @DoctorMcKay for the steam-pics-api - https://github.com/DoctorMcKay/steam-pics-api
+and Shawn Brink for the convenient batch file for rebuilding icons cache - https://www.tenforums.com/tutorials/5645-rebuild-icon-cache-windows-10-a.html
