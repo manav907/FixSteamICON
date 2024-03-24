@@ -29,10 +29,10 @@ This repository provides a fix for the described issue. By redownloading .ico fi
 to resolve the isue follow these steps
 
 1.  install npm https://nodejs.org/en/download
-2.  ensure python is installed to path and reboot(important) https://www.python.org/downloads/
-3.  run the install-dependencies.bat
+2.  ensure python is installed to path and reboot(important) https://www.python.org/downloads/ - this can be done by selecting advanced/customize installation during installation 
+3.  run the install-dependencies.bat - Note: you may encounter Microsoft Defender SmartScreen prompt. to get past it simply click on the "more info" text to proceed.
 4.  run the run-server.bat
-5.  run fix steam.py - if this closes instantly you probably messed up steps 1-3
+5.  run fix steam.py and select "DefaultSteamInstallDIR" location - if this closes instantly you probably messed up steps 1-3
 6.  run Rebuild_Icon_Cache.bat
 
 the problem should be resolved now
