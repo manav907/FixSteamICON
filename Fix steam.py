@@ -22,14 +22,16 @@ def doRealWork():
     root.withdraw()  # Hide the main window
     steam_maindir = filedialog.askdirectory(title="Select Folder")
     os.startfile(steam_maindir+icon_locations)
-    for app_id in get_app_ids(getjsondata()):
-            fixIcon(app_id)
+    appList = get_app_ids(getjsondata())
+    fixIcon(",".join(appList), appList)
 
-def fixIcon(app_id):
-    jsondata=get_app_info_as_json(app_id)
-    clientIconString = get_client_icon(jsondata,app_id)
-    if(clientIconString):
-        saveicon(app_id,clientIconString)
+def fixIcon(built_Str, appList):
+    jsondata = get_app_info_as_json(built_Str)
+    for app in appList:
+        clientIconString = get_client_icon(jsondata,app)
+        # print(clientIconString)
+        if(clientIconString):
+            saveicon(app,clientIconString)
 
 fixIconStatus=""
 def get_client_icon(data, app_id):
